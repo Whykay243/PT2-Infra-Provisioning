@@ -1,0 +1,11 @@
+terraform-homework-help-infrastructure/
+├── main.tf                   # Main configuration file defining all resources
+├── variables.tf              # Variable definitions for Terraform
+├── terraform.tfvars          # Variable values (e.g., instance type, allowed SSH CIDR)
+├── backend.tf                # Backend configuration for remote state storage in S3
+├── scripts/                  # Folder containing helper scripts
+│   └── user-data.sh          # EC2 instance setup script to install dependencies and configure the backend
+├── templates/                # Folder containing template files
+│   └── server.js.tpl         # Template for the backend `server.js` file
+├── outputs.tf                # Outputs of the infrastructure (e.g., EC2 public IP, S3 bucket name)
+└── README.md                 # Documentation on how to deploy and use the infrastructure
