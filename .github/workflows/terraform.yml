@@ -25,6 +25,7 @@ jobs:
           aws-region: ${{ secrets.AWS_REGION }}  # The AWS region for provisioning infrastructure
           role-session-name: Githubaction-aws-assumerole  # Session name for the assumed role
           role-duration-seconds: 3600  # Duration of the session (1 hour)
+          audience: sts.amazonaws.com
 
       - name: Terraform Init
         run: terraform init  # Initializes the Terraform configuration and downloads providers
