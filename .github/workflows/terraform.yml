@@ -11,38 +11,38 @@ jobs:
 
     steps:
       - name: Checkout source code
-        uses: actions/checkout@v4  # Checkout your repo
+        uses: actions/checkout@v4  # Checkout the code from the repository
 
       - name: Set up Terraform
         uses: hashicorp/setup-terraform@v3
         with:
-          terraform_version: 1.5.0  # Specify the version of Terraform
+          terraform_version: 1.5.0  # Specify the version of Terraform you want to use
 
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
-          role-to-assume: ${{ secrets.AWS_ROLE_ARN }}  # ARN for the IAM role to assume
-          aws-region: ${{ secrets.AWS_REGION }}  # AWS region
-          role-session-name: Githubaction-aws-assumerole
-          role-duration-seconds: 3600
+          role-to-assume: ${{ secrets.AWS_ROLE_ARN }}  # ARN of the role to assume for AWS authentication
+          aws-region: ${{ secrets.AWS_REGION }}  # The AWS region for provisioning infrastructure
+          role-session-name: Githubaction-aws-assumerole  # Session name for the assumed role
+          role-duration-seconds: 3600  # Duration of the session (1 hour)
 
       - name: Terraform Init
-        run: terraform init  # Initialize Terraform configuration
+        run: terraform init  # Initializes the Terraform configuration and downloads providers
 
       - name: Terraform Validate
-        run: terraform validate  # Validate Terraform configuration
+        run: terraform validate  # Validate the Terraform configuration files
 
       - name: Terraform Plan
         id: plan
-        run: terraform plan -out=tfplan  # Create Terraform execution plan
-        continue-on-error: true  # Continue even if plan fails (for subsequent check)
+        run: terraform plan -out=tfplan  # Generate an execution plan for Terraform
+        continue-on-error: true  # Continue running even if the plan fails (used for subsequent check)
 
       - name: Check Terraform Plan
         run: |
           if [ ${{ steps.plan.outcome }} != "success" ]; then
             echo "Terraform plan failed"
-            exit 1  # Exit if plan fails
+            exit 1  # Exit the workflow if the plan failed
           fi
 
       - name: Terraform Apply
-        run: terraform apply -auto-approve tfplan  # Apply the Terraform plan
+        run: terraform apply -auto-approve tfplan  # Apply the Terraform plan to provision resources
