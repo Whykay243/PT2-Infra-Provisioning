@@ -20,7 +20,6 @@ terraform {
 
 provider "aws" {
   region  = var.region
-  profile = "whykay"
 }
 
 # S3 Bucket Resources
