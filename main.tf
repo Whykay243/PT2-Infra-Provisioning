@@ -12,7 +12,6 @@ terraform {
     bucket         = "physicstutors-terraform-state"
     key            = "homework-help/terraform.tfstate"
     region         = "us-east-1"
-    profile        = "whykay"
     dynamodb_table = "whykay-bootstrap-dynamodb-table"
     encrypt        = true
   }
